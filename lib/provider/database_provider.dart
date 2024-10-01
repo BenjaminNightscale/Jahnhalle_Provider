@@ -65,63 +65,75 @@ class Database with ChangeNotifier {
     notifyListeners();
   }
 
-  Map<String, dynamic>? _selectedOrder;
+  dynamic _selectedOrder;
   get selectedOrder => _selectedOrder;
 
   int _selectedOrderIndex = -1;
   int get selectedOrderIndex => _selectedOrderIndex;
 
-  Future<List<Map<String, dynamic>>> getOrders(String orderStatus) async {
-    try {
-      QuerySnapshot querySnapshot = await FirebaseFirestore.instance
-          .collection('orders')
-          .where('orderStatus', isEqualTo: orderStatus)
-          .orderBy('orderId')
-          .get();
-
-      List<Map<String, dynamic>> orders = [];
-
-      for (DocumentSnapshot doc in querySnapshot.docs) {
-        Map<String, dynamic> data = doc.data() as Map<String, dynamic>;
-
-        // Convert orderId to int if necessary
-        int orderId;
-        if (data['orderId'] is int) {
-          orderId = data['orderId'];
-        } else if (data['orderId'] is String) {
-          orderId = int.tryParse(data['orderId']) ??
-              0; // Handle conversion from String to int
-        } else {
-          orderId = 0; // Default value if neither int nor String
-        }
-
-        List<Drink> drinks = (data['items'] as List<dynamic>).map((item) {
-          return Drink.fromFirestore(item as Map<String, dynamic>);
-        }).toList();
-        // Calculate waiting time
-        Timestamp createdAtTimestamp = data['createdAt'] as Timestamp;
-        DateTime createdAt = createdAtTimestamp.toDate();
-        Duration difference = DateTime.now().difference(createdAt);
-        String waitingTime = _formatDuration(difference);
-        orders.add({
-          'orderId': orderId,
-          'tableNumber': data['table']['tableNumber'],
-          'tableCapacity': data['table']['capacity'],
-          'items': drinks,
-          'status': data['orderStatus'], // Example status
-          'waitingTime': waitingTime, // Example waiting time
-        });
-      }
-
-      // updateOrderDetails(orders[0]);
-      return orders;
-    } catch (e) {
-      log('Failed to fetch orders: $e');
-      return [];
-    }
+  Stream<List<Map<String, dynamic>>> getOrdersStream(String status) {
+    log('message');
+    return FirebaseFirestore.instance
+        .collection('orders')
+        .where('orderStatus', isEqualTo: status)
+        .where("isDeleted", isEqualTo: false)
+        .orderBy('orderId')
+        .snapshots()
+        .map((snapshot) => snapshot.docs.map((doc) => doc.data()).toList());
   }
 
-  updateOrderDetails(order, int index) {
+  // Future<List<Map<String, dynamic>>> getOrders(String orderStatus) async {
+  //   try {
+  //     QuerySnapshot querySnapshot = await FirebaseFirestore.instance
+  //         .collection('orders')
+  //         .where('orderStatus', isEqualTo: orderStatus)
+  //         .orderBy('orderId')
+  //         .get();
+
+  //     List<Map<String, dynamic>> orders = [];
+
+  //     for (DocumentSnapshot doc in querySnapshot.docs) {
+  //       Map<String, dynamic> data = doc.data() as Map<String, dynamic>;
+
+  //       // Convert orderId to int if necessary
+  //       int orderId;
+  //       if (data['orderId'] is int) {
+  //         orderId = data['orderId'];
+  //       } else if (data['orderId'] is String) {
+  //         orderId = int.tryParse(data['orderId']) ??
+  //             0; // Handle conversion from String to int
+  //       } else {
+  //         orderId = 0; // Default value if neither int nor String
+  //       }
+
+  //       List<Drink> drinks = (data['items'] as List<dynamic>).map((item) {
+  //         return Drink.fromFirestore(item as Map<String, dynamic>);
+  //       }).toList();
+  //       // Calculate waiting time
+  //       Timestamp createdAtTimestamp = data['createdAt'] as Timestamp;
+  //       DateTime createdAt = createdAtTimestamp.toDate();
+  //       Duration difference = DateTime.now().difference(createdAt);
+  //       String waitingTime = formatDuration(difference);
+  //       orders.add({
+  //         'orderId': orderId,
+  //         'tableNumber': data['table']['tableNumber'],
+  //         'tableCapacity': data['table']['capacity'],
+  //         'items': drinks,
+  //         'status': data['orderStatus'], // Example status
+  //         'waitingTime': waitingTime, // Example waiting time
+  //       });
+  //     }
+
+  //     // updateOrderDetails(orders[0]);
+  //     return orders;
+  //   } catch (e) {
+  //     log('Failed to fetch orders: $e');
+  //     return [];
+  //   }
+  // }
+
+  updateOrderDetails(dynamic order, int index) {
+    log(">>>>>>> $order");
     if (order == null) {
       _selectedOrder = null;
     } else {
@@ -176,6 +188,21 @@ class Database with ChangeNotifier {
     }
   }
 
+  Future<void> markOrderAsDelete({required int orderId}) async {
+    try {
+      await FirebaseFirestore.instance
+          .collection('orders')
+          .doc(orderId.toString())
+          .update({
+        'isDeleted': true,
+      });
+      updateOrderDetails(null, -1);
+      log('OrderDeleted order ID $orderId');
+    } catch (e) {
+      log('Failed to delete order: $e');
+    }
+  }
+
   void startStatusUpdateTimer(
       {required int orderId, required String newStatus}) {
     Timer(const Duration(seconds: 20), () async {
@@ -187,7 +214,7 @@ class Database with ChangeNotifier {
   }
 
   // Helper method to format the duration
-  String _formatDuration(Duration duration) {
+  String formatDuration(Duration duration) {
     if (duration.inSeconds < 60) {
       return '${duration.inSeconds} sekunden';
     } else if (duration.inMinutes < 60) {

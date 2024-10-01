@@ -4,6 +4,7 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:jahnhalle_provider/provider/bottom_navigation_provider.dart';
 import 'package:jahnhalle_provider/screens/bottom_navigation/sub_screens/profile_content.dart';
+import 'package:jahnhalle_provider/utils/common/base_button.dart';
 import 'package:jahnhalle_provider/utils/widgets/base_appbar.dart';
 import 'package:jahnhalle_provider/utils/widgets/base_home.dart';
 import 'package:jahnhalle_provider/utils/widgets/home_tile.dart';
@@ -131,7 +132,11 @@ class HomeScreen extends StatelessWidget {
                   ],
                 ),
               ] else ...[
-                const ProfileContent()
+                const ProfileContent(),
+                BaseButton(
+                  buttonText: 'Speichern',
+                  onPressed: () {},
+                )
               ],
             ],
           ),

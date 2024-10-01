@@ -20,21 +20,29 @@ class TableList extends StatelessWidget {
           }
 
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return Center(child: CircularProgressIndicator());
+            return Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Center(child: CircularProgressIndicator()),
+              ],
+            );
           }
 
           final List<DocumentSnapshot> tableDocs = snapshot.data!.docs;
 
-          return ListView.builder(
-            shrinkWrap: true,
-            itemCount: tableDocs.length,
-            itemBuilder: (context, index) {
-              final tableData = tableDocs[index].data() as Map<String, dynamic>;
-              final tableNumber = tableData['tableNumber'];
-              // final capacity = tableData['capacity'];
+          return Expanded(
+            child: ListView.builder(
+              shrinkWrap: true,
+              itemCount: tableDocs.length,
+              itemBuilder: (context, index) {
+                final tableData =
+                    tableDocs[index].data() as Map<String, dynamic>;
+                final tableNumber = tableData['tableNumber'];
+                // final capacity = tableData['capacity'];
 
-              return TableTile(tableNumber: tableNumber);
-            },
+                return TableTile(tableNumber: tableNumber);
+              },
+            ),
           );
         },
       );

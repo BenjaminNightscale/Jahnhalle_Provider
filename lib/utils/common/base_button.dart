@@ -7,8 +7,15 @@ class BaseButton extends StatelessWidget {
   final String buttonText;
   final double? textSize;
   final void Function()? onPressed;
+  final ButtonStyle? style;
+  final Color? buttonTxtcolor;
   const BaseButton(
-      {super.key, required this.buttonText, this.onPressed, this.textSize});
+      {super.key,
+      required this.buttonText,
+      this.onPressed,
+      this.buttonTxtcolor,
+      this.textSize,
+      this.style});
 
   @override
   Widget build(BuildContext context) {
@@ -17,17 +24,19 @@ class BaseButton extends StatelessWidget {
       height: 90.h,
       child: ElevatedButton(
         onPressed: onPressed,
-        style: ElevatedButton.styleFrom(
-          backgroundColor: AppColors.blue,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(8.sp),
-          ),
-        ),
+        style: style ??
+            ElevatedButton.styleFrom(
+              backgroundColor: AppColors.blue,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(8.sp),
+              ),
+            ),
         child: Center(
           child: Text(
             buttonText,
             style: kMediumTextStyle.copyWith(
-                fontSize: textSize ?? 20.sp, color: Colors.white),
+                fontSize: textSize ?? 20.sp,
+                color: buttonTxtcolor ?? Colors.white),
           ),
         ),
       ),

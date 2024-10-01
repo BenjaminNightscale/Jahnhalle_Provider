@@ -34,7 +34,10 @@ class TableScreen extends StatelessWidget {
               ),
               if (value.isTablePage) ...[
                 const TableList(),
-                Spacer(),
+                // Spacer(),
+                SizedBox(
+                  height: 30.h,
+                ),
                 BaseButton(
                   buttonText: 'Neuen Tisch erstellen',
                   onPressed: () {

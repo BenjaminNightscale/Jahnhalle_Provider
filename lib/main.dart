@@ -4,7 +4,6 @@ import 'package:flutter/services.dart';
 import 'package:jahnhalle_provider/firebase_options.dart';
 import 'package:jahnhalle_provider/provider/bottom_navigation_provider.dart';
 import 'package:jahnhalle_provider/provider/database_provider.dart';
-import 'package:jahnhalle_provider/screens/bottom_navigation/bottom_naigation_screen.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:jahnhalle_provider/screens/auth/login_screen.dart';

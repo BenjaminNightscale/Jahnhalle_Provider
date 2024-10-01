@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:jahnhalle_provider/utils/common/app_theme.dart';
 import 'package:jahnhalle_provider/utils/common/base_button.dart';
@@ -10,51 +11,49 @@ class ProfileContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Row(
-          children: [
-            Expanded(
-              child: inputField(lable: 'Vorname', title: "Rene"),
-            ),
-            SizedBox(width: 20.w),
-            Expanded(
-              child: inputField(lable: 'Vorname', title: "Gmeiner"),
-            ),
-          ],
-        ),
-        SizedBox(height: 20.h),
-        Row(
-          children: [
-            Expanded(
-              child: inputField(lable: 'Username', title: "renegmeiner"),
-            ),
-            SizedBox(width: 20.w),
-            Expanded(
-              child: inputField(lable: 'Unternehmensname', title: "Jahnhalle"),
-            ),
-          ],
-        ),
-        SizedBox(height: 20.h),
-        Row(
-          children: [
-            Expanded(
-              child: inputField(
-                  lable: 'Emailadresse', title: "rene@daskartell.at"),
-            ),
-            SizedBox(width: 20.w),
-            Expanded(
-              child:
-                  inputField(lable: 'Telefonnummer', title: "+43 680 1525254"),
-            ),
-          ],
-        ),
-        SizedBox(height: 350.h),
-        BaseButton(
-          buttonText: 'Speichern',
-          onPressed: () {},
-        )
-      ],
+    return Expanded(
+      child: Column(
+        children: [
+          Row(
+            children: [
+              Expanded(
+                child: inputField(lable: 'Vorname', title: "Rene"),
+              ),
+              SizedBox(width: 20.w),
+              Expanded(
+                child: inputField(lable: 'Vorname', title: "Gmeiner"),
+              ),
+            ],
+          ),
+          SizedBox(height: 20.h),
+          Row(
+            children: [
+              Expanded(
+                child: inputField(lable: 'Username', title: "renegmeiner"),
+              ),
+              SizedBox(width: 20.w),
+              Expanded(
+                child:
+                    inputField(lable: 'Unternehmensname', title: "Jahnhalle"),
+              ),
+            ],
+          ),
+          SizedBox(height: 20.h),
+          Row(
+            children: [
+              Expanded(
+                child: inputField(
+                    lable: 'Emailadresse', title: "rene@daskartell.at"),
+              ),
+              SizedBox(width: 20.w),
+              Expanded(
+                child: inputField(
+                    lable: 'Telefonnummer', title: "+43 680 1525254"),
+              ),
+            ],
+          ),
+        ],
+      ),
     );
   }
 

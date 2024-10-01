@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:jahnhalle_provider/provider/bottom_navigation_provider.dart';
 import 'package:jahnhalle_provider/provider/database_provider.dart';
@@ -88,7 +89,11 @@ class _OrderScreenState extends State<OrderScreen> {
                   ],
                 ),
               ),
-              const OrderDetail()
+              Visibility(
+                  visible: db.selectedOrder != null,
+                  child: OrderDetail(
+                    tabIndex: tabIndex,
+                  ))
             ],
           ),
         ),
