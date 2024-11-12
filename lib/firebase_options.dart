@@ -17,10 +17,7 @@ import 'package:flutter/foundation.dart'
 class DefaultFirebaseOptions {
   static FirebaseOptions get currentPlatform {
     if (kIsWeb) {
-      throw UnsupportedError(
-        'DefaultFirebaseOptions have not been configured for web - '
-        'you can reconfigure this by running the FlutterFire CLI again.',
-      );
+      return web;
     }
     switch (defaultTargetPlatform) {
       case TargetPlatform.android:
@@ -28,15 +25,9 @@ class DefaultFirebaseOptions {
       case TargetPlatform.iOS:
         return ios;
       case TargetPlatform.macOS:
-        throw UnsupportedError(
-          'DefaultFirebaseOptions have not been configured for macos - '
-          'you can reconfigure this by running the FlutterFire CLI again.',
-        );
+        return macos;
       case TargetPlatform.windows:
-        throw UnsupportedError(
-          'DefaultFirebaseOptions have not been configured for windows - '
-          'you can reconfigure this by running the FlutterFire CLI again.',
-        );
+        return windows;
       case TargetPlatform.linux:
         throw UnsupportedError(
           'DefaultFirebaseOptions have not been configured for linux - '
@@ -67,4 +58,36 @@ class DefaultFirebaseOptions {
     iosClientId: '996649523240-061ptl4voh6b9u7lmrjqibu86u5h5sfs.apps.googleusercontent.com',
     iosBundleId: 'com.app.jahnhalleProvider',
   );
+
+  static const FirebaseOptions web = FirebaseOptions(
+    apiKey: 'AIzaSyAwWUxanx6qLeJteffI5bW3QoLRQu_xMRk',
+    appId: '1:996649523240:web:27d712ea2bdb6654ec3d1d',
+    messagingSenderId: '996649523240',
+    projectId: 'jahnhalle-4742a',
+    authDomain: 'jahnhalle-4742a.firebaseapp.com',
+    storageBucket: 'jahnhalle-4742a.appspot.com',
+    measurementId: 'G-93GXMNC7SW',
+  );
+
+  static const FirebaseOptions macos = FirebaseOptions(
+    apiKey: 'AIzaSyALBXbTVinH7wH1yNV9l5957slkl7S73yI',
+    appId: '1:996649523240:ios:e98d036f19cd9a7aec3d1d',
+    messagingSenderId: '996649523240',
+    projectId: 'jahnhalle-4742a',
+    storageBucket: 'jahnhalle-4742a.appspot.com',
+    androidClientId: '996649523240-t6e2tt7vpa2uekqtjptlgg4e32t1vbq0.apps.googleusercontent.com',
+    iosClientId: '996649523240-061ptl4voh6b9u7lmrjqibu86u5h5sfs.apps.googleusercontent.com',
+    iosBundleId: 'com.app.jahnhalleProvider',
+  );
+
+  static const FirebaseOptions windows = FirebaseOptions(
+    apiKey: 'AIzaSyAwWUxanx6qLeJteffI5bW3QoLRQu_xMRk',
+    appId: '1:996649523240:web:5fbe982a3375dd40ec3d1d',
+    messagingSenderId: '996649523240',
+    projectId: 'jahnhalle-4742a',
+    authDomain: 'jahnhalle-4742a.firebaseapp.com',
+    storageBucket: 'jahnhalle-4742a.appspot.com',
+    measurementId: 'G-MVS5272VRD',
+  );
+
 }

@@ -5,7 +5,6 @@ import 'dart:developer';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:jahnhalle_provider/utils/models/drinks_model.dart';
 
 class Database with ChangeNotifier {
   final CollectionReference tables =

@@ -13,7 +13,7 @@ class TableList extends StatelessWidget {
     return Consumer2<BottomBarProvider, Database>(
         builder: (context, value, db, child) {
       return StreamBuilder<QuerySnapshot>(
-        stream: db.tables.snapshots(),
+        stream: db.tables.orderBy('tableNumber', descending: false).snapshots(),
         builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
           if (snapshot.hasError) {
             return Center(child: Text('Something went wrong'));

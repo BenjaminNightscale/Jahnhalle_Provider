@@ -39,10 +39,10 @@
               "client_type": 3
             },
             {
-              "client_id": "996649523240-08733inc8mceu1blv6sipblgal8l8dt5.apps.googleusercontent.com",
+              "client_id": "996649523240-061ptl4voh6b9u7lmrjqibu86u5h5sfs.apps.googleusercontent.com",
               "client_type": 2,
               "ios_info": {
-                "bundle_id": "com.example.jahnhalle"
+                "bundle_id": "com.app.jahnhalleProvider"
               }
             }
           ]
@@ -75,10 +75,10 @@
               "client_type": 3
             },
             {
-              "client_id": "996649523240-08733inc8mceu1blv6sipblgal8l8dt5.apps.googleusercontent.com",
+              "client_id": "996649523240-061ptl4voh6b9u7lmrjqibu86u5h5sfs.apps.googleusercontent.com",
               "client_type": 2,
               "ios_info": {
-                "bundle_id": "com.example.jahnhalle"
+                "bundle_id": "com.app.jahnhalleProvider"
               }
             }
           ]

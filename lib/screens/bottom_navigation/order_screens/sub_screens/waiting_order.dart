@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -13,6 +14,23 @@ class WaitingOrder extends StatefulWidget {
 }
 
 class _WaitingOrderState extends State<WaitingOrder> {
+  Timer? _timer;
+
+  @override
+  void initState() {
+    super.initState();
+    // Start a timer to call setState every second
+    _timer = Timer.periodic(Duration(seconds: 1), (Timer t) {
+      setState(() {}); // Triggers a rebuild every second
+    });
+  }
+
+  @override
+  void dispose() {
+    _timer?.cancel(); // Cancel the timer when the widget is disposed
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Consumer<Database>(builder: (context, db, child) {
@@ -57,8 +75,6 @@ class _WaitingOrderState extends State<WaitingOrder> {
                     DateTime createdAt = createdAtTimestamp.toDate();
                     Duration difference = DateTime.now().difference(createdAt);
                     String waitingTime = db.formatDuration(difference);
-
-                    // final drinks = order['items'];
 
                     return GestureDetector(
                       onTap: () {
